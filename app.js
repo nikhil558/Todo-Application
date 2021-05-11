@@ -91,12 +91,13 @@ app.get("/agenda/", validateQuery, async (request, response) => {
 
 app.post("/todos/", validateBody, async (request, response) => {
   const { id, todo, priority, status, category, dueDate } = request.body;
+  const fomattedDate=format(new Date(dueDate), "yyyy-MM-dd")
   await db.run(`
     Insert into
     todo
     (id, todo, priority, status, category, due_date)
     values
-    (${id}, "${todo}", "${priority}", "${status}", "${category}", "${dueDate}");
+    (${id}, "${todo}", "${priority}", "${status}", "${category}", "${fomattedDate}");
     `);
   response.send("Todo Successfully Added");
 });
